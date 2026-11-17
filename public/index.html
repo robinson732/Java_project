@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#122a2a">
+    <title>Estate Security Incident Log</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Estate Security Incident Log home">
+          <span class="brand-mark" aria-hidden="true">ES</span>
+          <span>Estate Security <strong>Incident Log</strong></span>
+        </a>
+        <button id="logout-button" class="button button-quiet hidden" type="button">Sign out</button>
+      </header>
+
+      <section id="login-view" class="login-view hidden" aria-labelledby="login-title">
+        <div class="login-card">
+          <span class="eyebrow">ESTATE OPERATIONS</span>
+          <h1 id="login-title">Keep your team informed.</h1>
+          <p>Sign in with your estate's incident-log password to review and manage reports.</p>
+          <form id="login-form">
+            <label for="login-password">Access password</label>
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+            <button class="button button-primary button-full" type="submit">Sign in</button>
+            <p id="login-error" class="form-error" role="alert"></p>
+          </form>
+        </div>
+        <div class="login-aside">
+          <div class="aside-icon" aria-hidden="true">+</div>
+          <p class="eyebrow">A clearer record of every incident</p>
+          <h2>One place to report, review and follow up.</h2>
+          <p>Keep incidents organized by date, location, severity and status.</p>
+        </div>
+      </section>
+
+      <section id="app-view" class="app-view hidden">
+        <div class="page-heading">
+          <div class="page-heading-copy">
+            <span class="eyebrow">ESTATE OPERATIONS</span>
+            <h1>Incident log<span class="heading-period">.</span></h1>
+            <p>Every report matters. Keep your estate informed and your follow-up on track.</p>
+          </div>
+          <div class="hero-illustration" aria-hidden="true">
+            <span class="hero-orbit hero-orbit-one"></span>
+            <span class="hero-orbit hero-orbit-two"></span>
+            <svg viewBox="0 0 260 200" role="presentation">
+              <path class="hero-shield" d="M130 18 204 45v48c0 46-29 75-74 94-45-19-74-48-74-94V45z"/>
+              <path class="hero-person" d="M91 166c3-29 14-47 34-52h13c21 5 32 23 35 52"/>
+              <path class="hero-hood" d="M104 91c0-22 12-38 28-38s28 16 28 38l-8 22h-40z"/>
+              <path class="hero-face" d="M114 87c0-14 7-24 18-24s18 10 18 24l-4 19h-28z"/>
+              <path class="hero-mask" d="m111 88 21 5 21-5-4 16h-34z"/>
+              <path class="hero-eye" d="m116 83 11 3m6 0 11-3"/>
+              <path class="hero-arm" d="m164 124 23-19 10 8-20 27"/>
+              <rect class="hero-can" x="188" y="95" width="17" height="29" rx="4" transform="rotate(25 196 109)"/>
+              <path class="hero-can-cap" d="m193 91 10 5-3 6-10-5z"/>
+              <path class="hero-spark" d="m211 87 4-9m4 17 9-5m-16 17 10 2"/>
+            </svg>
+            <div class="hero-caption"><span class="hero-caption-dot"></span>Stay alert. Stay connected.</div>
+          </div>
+          <div class="record-count"><span id="record-count">0</span><span>reports<br>logged</span></div>
+        </div>
+
+        <div id="notice" class="notice hidden" role="status"></div>
+
+        <section class="panel form-panel" aria-labelledby="form-title">
+          <div class="panel-heading">
+            <div>
+              <span class="section-number">01</span>
+              <h2 id="form-title">New incident</h2>
+            </div>
+            <p>Fields marked <span class="required-mark">*</span> are required.</p>
+          </div>
+          <form id="incident-form">
+            <div class="form-grid">
+              <label>Incident type <span class="required-mark">*</span>
+                <select name="incidentType" required>
+                  <option>Theft</option>
+                  <option>Break-in</option>
+                  <option>Trespassing</option>
+                  <option>Vandalism</option>
+                  <option>Suspicious Activity</option>
+                  <option>Fire</option>
+                  <option>Other</option>
+                </select>
+              </label>
+              <label>Severity <span class="required-mark">*</span>
+                <select name="severity" required>
+                  <option>Low</option>
+                  <option>Medium</option>
+                  <option>High</option>
+                  <option>Critical</option>
+                </select>
+              </label>
+              <label>Location <span class="required-mark">*</span>
+                <input name="location" maxlength="100" placeholder="e.g. Gate 2, Block C" required>
+              </label>
+              <label>Date of incident <span class="required-mark">*</span>
+                <input name="incidentDate" type="date" required>
+              </label>
+              <label>Reported by <span class="required-mark">*</span>
+                <input name="reportedBy" maxlength="80" placeholder="Guard or resident name" required>
+              </label>
+              <label>Status <span class="required-mark">*</span>
+                <select name="status" required>
+                  <option>Open</option>
+                  <option>Under Investigation</option>
+                  <option>Resolved</option>
+                </select>
+              </label>
+              <label class="full-width">Description <span class="required-mark">*</span>
+                <textarea name="description" rows="3" maxlength="255" placeholder="Briefly describe what happened" required></textarea>
+                <span class="field-hint"><span id="description-count">0</span>/255 characters</span>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button id="cancel-edit" class="button button-quiet hidden" type="button">Cancel edit</button>
+              <button id="submit-incident" class="button button-primary" type="submit">Save incident</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel table-panel" aria-labelledby="reports-title">
+          <div class="panel-heading">
+            <div>
+              <span class="section-number">02</span>
+              <h2 id="reports-title">Recent reports</h2>
+            </div>
+            <button id="refresh-button" class="button button-quiet" type="button">Refresh</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Incident</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Severity</th>
+                  <th scope="col">Reported by</th>
+                  <th scope="col">Status</th>
+                  <th scope="col"><span class="sr-only">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody id="incident-rows"></tbody>
+            </table>
+            <div id="empty-state" class="empty-state hidden">
+              <span class="empty-icon" aria-hidden="true">—</span>
+              <h3>No incidents logged yet</h3>
+              <p>Use the form above to add the first report.</p>
+            </div>
+          </div>
+        </section>
+        <footer class="footer"><span>Estate Security Incident Log</span><span>Keep reports factual and follow up promptly.</span></footer>
+      </section>
+    </main>
+  </body>
+</html>
